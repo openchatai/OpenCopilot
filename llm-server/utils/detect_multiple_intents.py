@@ -7,7 +7,7 @@ from routes.workflow.typings.run_workflow_input import WorkflowData
 from langchain.tools.json.tool import JsonSpec
 from typing import List
 
-from typing import Any, Dict, Optional, cast, Union
+from typing import Any, Dict, Optional
 from langchain.chains import LLMChain
 from langchain.prompts import PromptTemplate
 from utils.get_llm import get_llm
@@ -50,9 +50,8 @@ def hasMultipleIntents(user_input: str) -> bool:
 # print(json.dumps(result, indent=2))
 
 
-def getSummaries(spec_source: str):
+def getSummaries(spec_source: str) -> str:
     """Get API endpoint summaries from an OpenAPI spec."""
-
     summaries: List[str] = []
 
     # Load the OpenAPI spec

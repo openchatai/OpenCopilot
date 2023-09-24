@@ -94,7 +94,8 @@ def run_workflow_controller() -> Any:
             text=data.get("text"),
             swagger_url=data.get("swagger_url"),
             headers=data.get("headers", {}),
-            server_base_url=data["server_base_url"],
+            server_base_url=data.get("server_base_url"),
+            flow_state=data.get("flow_state"),
         )
     )
     return result

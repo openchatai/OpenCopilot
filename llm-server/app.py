@@ -15,7 +15,7 @@ from typing import Any, Tuple
 from prompts.base import api_base_prompt, non_api_base_prompt
 from routes.workflow.workflow_service import run_workflow
 from routes.workflow.typings.run_workflow_input import WorkflowData
-from utils.detect_multiple_intents import hasMultipleIntents, hasSingleIntent
+from utils.detect_multiple_intents import hasSingleIntent
 
 app = Flask(__name__)
 
@@ -31,6 +31,7 @@ def handle():
     base_prompt = data.get("base_prompt")
     headers = data.get("headers", {})
     server_base_url = data.get("server_base_url")
+    flow_state = data.get("flow_state", None)
 
     if not base_prompt:
         return json.dumps({"error": "base_prompt is required"}), 400
@@ -44,7 +45,7 @@ def handle():
     try:
         if not hasSingleIntent(swagger_url, text):
             return run_workflow(
-                WorkflowData(text, swagger_url, headers, server_base_url)
+                WorkflowData(text, swagger_url, headers, server_base_url, flow_state)
             )
     except Exception as e:
         print(f"Using agent: {e}")
