@@ -24,7 +24,7 @@ app.register_blueprint(workflow, url_prefix="/workflow")
 
 ## TODO: Implement caching for the swagger file content (no need to load it everytime)
 @app.route("/handle", methods=["POST", "OPTIONS"])
-def handle():
+def handle() -> Any:
     data = request.get_json()
     text = data.get("text")
     swagger_url = data.get("swagger_url")
