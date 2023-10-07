@@ -4,6 +4,7 @@ from flask import Flask, request, jsonify, Response
 from routes.workflow.workflow_controller import workflow
 from routes._swagger.controller import _swagger
 from typing import Any, Tuple
+from customizers.trello import trello_migration 
 
 logging.basicConfig(level=logging.INFO)
 
@@ -33,5 +34,6 @@ def internal_server_error(error: Any) -> Tuple[str, int]:
     return "Internal Server Error", 500
 
 
+trello_migration()
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8002, debug=True)

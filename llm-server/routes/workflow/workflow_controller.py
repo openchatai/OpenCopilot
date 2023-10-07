@@ -6,15 +6,12 @@ from bson import ObjectId, json_util
 from copilot_exceptions.handle_exceptions_and_errors import handle_exceptions_and_errors
 from utils.vector_db.add_workflow import add_workflow_data_to_qdrant
 from flask import Blueprint, request, jsonify
-from langchain.docstore.document import Document
 from opencopilot_types.workflow_type import WorkflowDataType
 from routes.workflow.typings.run_workflow_input import WorkflowData
 from routes.workflow.validate_json import validate_json
 from routes.workflow.utils import run_workflow
 from utils.db import Database
-from utils.get_embeddings import get_embeddings
 from utils.vector_db.get_vector_store import get_vector_store
-from utils.vector_db.init_vector_store import init_vector_store
 from utils.vector_db.store_options import StoreOptions
 
 db_instance = Database()
