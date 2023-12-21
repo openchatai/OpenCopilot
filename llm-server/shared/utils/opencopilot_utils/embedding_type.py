@@ -7,4 +7,4 @@ class EmbeddingProvider(Enum):
     azure = "azure"
     llama2 = "llama2"
     openchat = "openchat"
-
+    fastembed = "fastembed"
