@@ -1,0 +1,25 @@
+# Use root/example as user/password credentials
+version: '3.1'
+
+services:
+  db:
+    image: mysql:8
+    container_name: db
+    environment:
+      MYSQL_ROOT_PASSWORD: password123
+      MYSQL_DATABASE: rust
+      MYSQL_USER: dbuser
+      MYSQL_PASSWORD: dbpass
+    ports:
+      - "6033:3306"
+    volumes:
+      - dbdata:/var/lib/mysql
+
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+volumes:
+  dbdata:

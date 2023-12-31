@@ -1,0 +1,9 @@
+CREATE TABLE website_data_sources (
+  id CHAR(36) PRIMARY KEY,
+  chatbot_id varchar(255) NOT NULL,
+  status varchar(255) DEFAULT NULL,
+  url varchar(255) NOT NULL,
+  error varchar(1024) DEFAULT NULL,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+)
