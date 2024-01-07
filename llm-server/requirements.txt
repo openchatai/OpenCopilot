@@ -47,7 +47,7 @@ grpcio-tools==1.59.2
 h11==0.14.0
 h2==4.1.0
 hpack==4.0.0
-httpcore==0.18.0
+httpcore==1.0.2
 httptools==0.6.1
 httpx==0.25.0
 huggingface-hub==0.17.3
