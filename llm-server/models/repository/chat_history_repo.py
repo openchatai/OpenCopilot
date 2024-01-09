@@ -5,6 +5,7 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy import distinct
 from sqlalchemy.orm import class_mapper
 from langchain.schema import BaseMessage, AIMessage, HumanMessage
+from routes.flow.utils.api_retrievers import get_chat_history_from_vector_store
 
 Session = sessionmaker(bind=engine)
 
@@ -78,6 +79,16 @@ async def get_chat_message_as_llm_conversation(session_id: str) -> List[BaseMess
 
     return conversations
 
+# the first method can be switched with this one to remove dependency on sql database
+async def get_chat_message_as_llm_conversation2(text: str, session_id: str) -> List[BaseMessage]:
+    docs = await get_chat_history_from_vector_store(text, session_id)
+    result: List[BaseMessage] = []
+    for doc in docs:
+        human, assistant = doc.document.page_content.split("////")
+        result.append(HumanMessage(content=human))
+        result.append(AIMessage(content=assistant))
+        
+    return result
 
 def get_all_chat_history(limit: int = 10, offset: int = 0) -> List[ChatHistory]:
     """Retrieves all chat history records.

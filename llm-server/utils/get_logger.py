@@ -2,9 +2,20 @@ import structlog
 import logging
 import sentry_sdk
 import os
+from sentry_sdk.integrations.logging import LoggingIntegration
+
+# capture all logs info and above
+logging_level = logging.INFO
+sentry_logging = LoggingIntegration(
+    level=logging_level,        # Set the desired logging level
+    event_level=logging_level    # Set the desired event level (optional)
+)
+
+
 sentry_sdk.init(
     traces_sample_rate=1.0,
     profiles_sample_rate=1.0,
+    integrations=[sentry_logging],
 )
 
 dsn = os.getenv("SENTRY_DSN")
@@ -34,7 +45,7 @@ class CustomLogger:
         )
         
         # only enable this for prod environment
-        sentry_sdk.capture_message(event, level=level, scope=None) if dsn is not None else None
+        sentry_sdk.capture_message(event, level=logging.getLevelName(level), scope=None) if dsn is not None else None
 
     def info(self, event, **kwargs):
         self.log(logging.INFO, event, **kwargs)

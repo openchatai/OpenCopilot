@@ -11,6 +11,7 @@ from shared.utils.opencopilot_utils.get_vector_store import get_vector_store
 from utils.get_chat_model import get_chat_model
 from utils.get_logger import CustomLogger
 from utils.llm_consts import vs_thresholds, VectorCollections, initialize_qdrant_client
+from custom_types.conversation import Conversation
 
 client = initialize_qdrant_client()
 logger = CustomLogger(module_name=__name__)
@@ -30,8 +31,8 @@ score_thresholds: Dict[str, float] = {
 }
 
 
-async def get_relevant_documents(
-        text: str, bot_id: str, collection_name: str
+async def search_documents(
+        text: str, collection_name: str, field_key: str, field_value: str
 ) -> List[DocumentSimilarityDTO]:
     try:
         embedding = get_embeddings()
@@ -42,8 +43,8 @@ async def get_relevant_documents(
             query_filter=models.Filter(
                 must=[
                     models.FieldCondition(
-                        key="metadata.bot_id",
-                        match=models.MatchValue(value=bot_id),
+                        key=f"metadata.{field_key}",
+                        match=models.MatchValue(value=field_value),
                     )
                 ]
             ),
@@ -84,16 +85,34 @@ async def get_relevant_documents(
         )
         return []
 
+# This is to be used when having conversation with the bot, we want to fetch the relevant pieces of history
+async def get_chat_history_from_vector_store(
+        text: str, session_id: str
+) -> List[DocumentSimilarityDTO]:
+    return await search_documents(text, "chat_history", "session_id", session_id)
+
 
 async def get_relevant_actions(text: str, bot_id: str) -> List[DocumentSimilarityDTO]:
-    return await get_relevant_documents(text, bot_id, VectorCollections.actions)
+    return await search_documents(text, VectorCollections.actions, "bot_id", bot_id)
 
 
 async def get_relevant_flows(text: str, bot_id: str) -> List[DocumentSimilarityDTO]:
-    return await get_relevant_documents(text, bot_id, VectorCollections.flows)
+    return await search_documents(text, VectorCollections.flows, "bot_id", bot_id)
 
 
 async def get_relevant_knowledgebase(
         text: str, bot_id: str
 ) -> List[DocumentSimilarityDTO]:
-    return await get_relevant_documents(text, bot_id, VectorCollections.knowledgebase)
+    return await search_documents(text, VectorCollections.knowledgebase, "bot_id", bot_id)
+
+async def store_conversation_history(conversations: List[Conversation], session_id: str): 
+    history_store = get_vector_store(StoreOptions(namespace="chat_history"))
+    
+    docs: List[Document] = []
+    for c in conversations:
+        doc_text = c.human_message + " //// " + c.assistant_response  
+        doc = Document(page_content=doc_text)
+        doc.metadata.update({"session_id": session_id})
+        docs.append(doc)
+        
+    history_store.add_documents(docs)

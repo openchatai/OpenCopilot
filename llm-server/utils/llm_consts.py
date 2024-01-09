@@ -27,6 +27,7 @@ model_env_var = "CHAT_MODEL"
 
 class VectorCollections:
     flows = "flows"
+    chat_history = "chat_history"
     actions = "actions"
     knowledgebase = "knowledgebase"
 

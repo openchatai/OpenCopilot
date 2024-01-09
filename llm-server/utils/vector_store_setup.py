@@ -31,3 +31,4 @@ def init_qdrant_collections():
     try_create_collection(VectorCollections.knowledgebase, vector_params)
     try_create_collection(VectorCollections.actions, vector_params)
     try_create_collection(VectorCollections.flows, vector_params)
+    try_create_collection(VectorCollections.chat_history, vector_params)
