@@ -68,7 +68,7 @@ jsonpatch==1.33
 jsonpointer==2.4
 jsonschema==4.19.2
 jsonschema-path==0.3.1
-jsonschema-specifications==2023.7.1
+jsonschema-specifications==2023.12.1
 kombu==5.3.4
 langchain==0.0.341
 langchain-core==0.0.6
