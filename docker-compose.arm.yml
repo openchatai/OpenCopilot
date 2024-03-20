@@ -15,8 +15,8 @@ services:
     env_file:
       - llm-server/.env
     ports:
-      - 8002:8002
-      - 5678:5678
+      - 8002
+      - 5678
     depends_on:
       mysql:
         condition: service_healthy
