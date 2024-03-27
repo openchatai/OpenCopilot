@@ -71,7 +71,7 @@ jsonschema-path==0.3.2
 jsonschema-specifications==2023.7.1
 kombu==5.3.4
 langchain==0.0.341
-langchain-core==0.0.6
+langchain-core==0.1.35
 langsmith==0.0.63
 lazy-object-proxy==1.9.0
 loguru==0.7.2
