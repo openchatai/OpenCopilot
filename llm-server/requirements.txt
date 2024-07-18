@@ -133,7 +133,7 @@ rsa==4.9
 ruamel.yaml==0.18.3
 ruamel.yaml.clib==0.2.8
 selenium==4.15.2
-sentry-sdk==1.39.1
+sentry-sdk==2.8.0
 simple-websocket==1.0.0
 six==1.16.0
 smmap==5.0.1
