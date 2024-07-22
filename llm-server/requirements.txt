@@ -168,7 +168,7 @@ Werkzeug==3.0.3
 wrapt==1.16.0
 wsproto==1.2.0
 yarl==1.9.4
-zipp==3.19.0
+zipp==3.19.2
 lxml==4.9.3
 Flask-SocketIO==5.3.6
 sentry_sdk==1.39.1
