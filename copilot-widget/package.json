@@ -51,7 +51,7 @@
     "tailwindcss-animate": "^1.0.7",
     "timeago.js": "^4.0.2",
     "typescript": "^5.3.3",
-    "vite": "^4.5.2",
+    "vite": "^4.5.3",
     "vite-plugin-dts": "^3.7.2",
     "vite-tsconfig-paths": "^4.3.1"
   },
